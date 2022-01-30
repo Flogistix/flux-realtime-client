@@ -1,5 +1,6 @@
-![Flux Realtime](./assets/images/FluxRealtime.png)
-
+<p align="center">
+<img src="./assets/images/FluxRealtime.png" alt="Flux Realtime"/>
+</p>
 Flux Realtime is a data delivery service that allows Flogistix 
 to deliver all the data we collect from our Flogistix Compressors
 to our customers.  

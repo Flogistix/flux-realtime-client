@@ -1,2 +1,6 @@
-# flux-realtime-client
-Documentation and Example Clients for customers consuming data from Flux Realtime
+![Flux Realtime](./assets/images/FluxRealtime.png)
+
+Documentation and Example Clients for Flogistix customers consuming 
+data from Flux Realtime.
+
+

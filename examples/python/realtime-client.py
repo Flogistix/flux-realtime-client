@@ -26,14 +26,14 @@ def get_auth0_token(client_id_, client_secret_):
     }
     headers = {'content-type': 'application/json'}
 
-    resp = requests.post('https://axil.auth0.com/oauth/token',
+    req_resp = requests.post('https://axil.auth0.com/oauth/token',
                          headers=headers,
                          json=payload,
                          )
-    if resp.status_code != requests.codes.ok:
+    if req_resp.status_code != requests.codes.ok:
         raise Exception('Error occurred getting Bearer token')
     print(f'get_auth0_token :: completed\n')
-    return resp.json()
+    return req_resp.json()
 
 
 def get_stream_info(bearer_token_, base_url_,):
@@ -42,11 +42,11 @@ def get_stream_info(bearer_token_, base_url_,):
         'content-type': 'application/json',
         'Authorization': f'Bearer {bearer_token_}'
     }
-    resp = requests.get(base_url_, headers=headers,)
-    if resp.status_code != requests.codes.ok:
+    req_resp = requests.get(base_url_, headers=headers,)
+    if req_resp.status_code != requests.codes.ok:
         raise Exception('Error occurred getting stream information')
     print(f'get_stream_info :: completed\n')
-    return resp.json()
+    return req_resp.json()
 
 
 def get_shard_iterator(bearer_token_, base_url_, shard_id_, shard_iterator_type_='LATEST'):
@@ -60,11 +60,11 @@ def get_shard_iterator(bearer_token_, base_url_, shard_id_, shard_iterator_type_
         'ShardId': shard_id_,
         'ShardIteratorType': shard_iterator_type_,
     }
-    resp = requests.request(method='get', url=shard_iterator_url, headers=headers, json=body)
-    if resp.status_code != requests.codes.ok:
+    req_resp = requests.request(method='get', url=shard_iterator_url, headers=headers, json=body)
+    if req_resp.status_code != requests.codes.ok:
         raise Exception('Error occurred getting stream information')
     print(f'get_shard_iterator :: completed\n')
-    return resp.json()
+    return req_resp.json()
 
 
 def get_records(bearer_token_, base_url_, shard_iterator_, limit_):

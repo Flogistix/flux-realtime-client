@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
     while True:
         # Kinesis GetRecords has a limit of five transactions per second, per shard
-        time.sleep(1)
+        time.sleep(3)
         batch_data = []
         for iterator in iterators:
             shard_iter = iterators[iterator]

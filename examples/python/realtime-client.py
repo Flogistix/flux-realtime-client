@@ -44,7 +44,7 @@ def get_stream_info(bearer_token_, base_url_,):
     }
     req_resp = requests.get(base_url_, headers=headers,)
     if req_resp.status_code != requests.codes.ok:
-        raise Exception('Error occurred getting stream information')
+        raise Exception(f'Error occurred getting stream information. {req_resp.json()}')
     print(f'get_stream_info :: completed\n')
     return req_resp.json()
 
@@ -116,6 +116,7 @@ if __name__ == '__main__':
         base_url = base_dev_url
 
     company_url = f'{base_url}/{args.companyName.lower()}'
+    print(f'{company_url}\n')
     bearer_token = token_obj['access_token']
 
     stream_info = get_stream_info(bearer_token, company_url)

@@ -108,3 +108,21 @@ Response:
 There is a throttling limit of 100 requests per minute. Since each 
 call can receive up 10,000 records. Calls above this limit will be rate
 limited and/or additional charges may apply to raise the limit.
+
+Below is an example payload that you could receive.
+
+```
+{
+	"epochMs": 1652128223000,
+	"registerId": 416,
+	"val": 2,
+	"rtms": 1652128223567,
+	"pk": "1_333_2222_1111_1754_889_21_108",
+	"tagId": 889,
+	"label": "Valve Loaded Position",
+	"tagName": "register_tag__loading_valve_#4_status",
+	"orgId": 333,
+	"siteId": 2222,
+	"assetId": 1111
+}
+```

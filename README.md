@@ -126,3 +126,5 @@ Below is an example payload that you could receive.
 	"assetId": 1111
 }
 ```
+
+The `assetId` here can be used to get asset information from our Flux Enterprise Objects API. Located here [Flux Enterprise Object Client Documentation](https://github.com/Flogistix/flux-enterprise-object-client)

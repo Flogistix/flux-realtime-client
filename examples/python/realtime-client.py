@@ -49,7 +49,7 @@ def get_stream_info(bearer_token_, base_url_,):
     return req_resp.json()
 
 
-def get_shard_iterator(bearer_token_, base_url_, shard_id_, shard_iterator_type_='LATEST'):
+def get_shard_iterator(bearer_token_, base_url_, shard_id_, shard_iterator_type_='LATEST', startTime=None, sequenceNumber=None):
     print(f'get_shard_iterator :: starting')
     shard_iterator_url = f'{base_url_}/shard-iterator'
     headers = {
@@ -60,6 +60,11 @@ def get_shard_iterator(bearer_token_, base_url_, shard_id_, shard_iterator_type_
         'ShardId': shard_id_,
         'ShardIteratorType': shard_iterator_type_,
     }
+    if shard_iterator_type_ == 'AT_TIMESTAMP':
+        body['Timestamp'] = startTime
+    if shard_iterator_type_ in ['AT_SEQUENCE', 'AFTER_SEQUENCE']:
+        body['StartingSequenceNumber'] = sequenceNumber
+
     req_resp = requests.request(method='get', url=shard_iterator_url, headers=headers, json=body)
     if req_resp.status_code != requests.codes.ok:
         raise Exception('Error occurred getting stream information')
@@ -105,9 +110,17 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--limit', help='Record Limit to get on each call to the stream', default=100)
     parser.add_argument('-t', '--shardType',
                         help='The Shard Iterator type to use',
-                        choices=['TRIM_HORIZON', 'LATEST'],
+                        choices=['TRIM_HORIZON', 'LATEST', 'AT_SEQUENCE', 'AFTER_SEQUENCE', 'AT_TIMESTAMP'],
                         )
+    parser.add_argument('-u', '--unixTime', help='When using AT_TIMESTAMP provide a time in miliseconds')
+    parser.add_argument('-n', '--sequenceNumber', help='When using AT_SEQUENCE or AFTER_SEQUENCE provide a starting sequence number')
     args = parser.parse_args()
+
+    if args.shardType == 'AT_TIMESTAMP' and args.unixTime is None:
+        raise Exception("Unix formatted starting time is required to use the AT_TIMESTAMP iterator")
+    if args.shardType in ['AT_SEQUENCE', 'AFTER_SEQUENCE'] and args.sequenceNumber is None:
+        raise Exception("A sequence number is required when using the AT_SEQUENCE "\
+                        "or AFTER_SEQUENCE shard type")
 
     token_obj = get_auth0_token(args.clientId, args.clientSecret)
     if args.environment == 'prod':
@@ -125,7 +138,9 @@ if __name__ == '__main__':
     iterators = {}
     for shards in stream_info['StreamDescription']['Shards']:
         shard_id = shards['ShardId']
-        shard_iterator = get_shard_iterator(bearer_token, company_url, shard_id, args.shardType)
+        shard_iterator = get_shard_iterator(bearer_token, company_url, shard_id,
+                                            args.shardType, startTime=args.unixTime,
+                                            sequenceNumber=args.sequenceNumber)
         if 'ShardIterator' in shard_iterator:
             iterators[shard_id] = shard_iterator['ShardIterator']
 

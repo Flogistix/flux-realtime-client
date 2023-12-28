@@ -117,7 +117,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.shardType == 'AT_TIMESTAMP' and args.unixTime is None:
-        raise Exception("Unix formatted starting time is requried to use the AT_TIMESTAMP iterator")
+        raise Exception("Unix formatted starting time is required to use the AT_TIMESTAMP iterator")
     if args.shardType in ['AT_SEQUENCE', 'AFTER_SEQUENCE'] and args.sequenceNumber is None:
         raise Exception("A sequence number is required when using the AT_SEQUENCE "\
                         "or AFTER_SEQUENCE shard type")

@@ -127,4 +127,9 @@ Below is an example payload that you could receive.
 }
 ```
 
-The `assetId` here can be used to get asset information from our Flux Enterprise Objects API. Located here [Flux Enterprise Object Client Documentation](https://github.com/Flogistix/flux-enterprise-object-client)
+The `assetId` here can be used to get asset information from our Flux Enterprise Objects API. Located here [Flux Enterprise Object Client Documentation](https://github.com/Flogistix/flux-enterprise-object-client) ** see note below.
+
+**EDIT**
+As we are dealing with some issues on authentication with our Enterprise Objects APIs, please refer to the metadata that our team has provided you for reference on the `assetId` value.
+If you are in need of this metadata about your units, please contact support@flogistix.com to request it.
+Thank you for your patience and understanding.

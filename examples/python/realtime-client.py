@@ -138,7 +138,7 @@ if __name__ == '__main__':
     else:
         base_url = base_dev_url
 
-    company_url = f'{base_url}/{args.companyName.lower()}'
+    company_url = f'{base_url}/{args.companyName.replace(" ", "-").lower()}'
     print(f'{company_url}\n')
     bearer_token = token_obj['access_token']
 
